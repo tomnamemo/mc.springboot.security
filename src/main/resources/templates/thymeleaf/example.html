@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>thymeleaf</title>
+</head>
+<body th:with="subject='thyemeleaf'">
+  <h1>Hello Thymeleaf</h1>
+  <h2>1. 변수 선언 및 출력</h2>
+  <pre>
+      변수선언 : th:with
+      변수출력 : th:text="${variable}"
+
+      1. 변수 스코프
+      타임리프의 변수 스코프는 HTML요소의 영역과 일치
+      부모요소에서 선언한 변수는 자식요소에서 사용할 수 있다.
+      형제요소나 후손요소에서 선언한 변수는 부모요소에서 사용할 수 없다!
+
+      2. | | : 문자열 템플릿 (변수 + 문자열 결합)
+
+      3. inline 표현식
+
+    </pre>
+  <div th:text="${subject}">dummy text</div>
+  <div th:text="|과목: ${subject}|">dummy text</div>
+  <div>inline 표현식 : [[${subject}]]</div>
+
+  <h2>2. 선택 변수 표현식  *{...}</h2>
+  <ol th:object="${example}">
+    <li th:text="*{name}"></li>
+    <li th:text="*{age}"></li>
+    <li th:text="*{subject}"></li>
+    <li th:text="*{score}"></li>
+    <li th:text="*{isStudent}"></li>
+  </ol>
+
+  <h2>3. 링크 표현식  @{...}</h2>
+  <pre>
+      1. context path를 자동으로 작성해준다.
+      2. url queryString을 편하게 작성할 수 있다.
+      3. 동적 url 생성 가능
+    </pre>
+  <a th:href="@{https://www.naver.com(name=mc, age=15)}">네이버에게 파라미터 보내기</a>
+  <a th:href="@{https://www.naver.com(name=${example.subject})}">동적파라미터써보기</a>
+
+  <h2>4. unescape 처리  th:utext</h2>
+  <pre>
+      xss 공격 방지를 위한 문자열 escape 처리
+      cross site script attack
+    </pre>
+  <div>
+    <p th:text="|escape: ${xss}|"></p>
+    <p th:utext="|unescape: ${xss}|"></p>
+  </div>
+
+  <h2>5. th:attr 속성</h2>
+  <div th:object="${attr}" th:attr="style=|background-color:*{backgroundColor}|">th:attr</div>
+  <div th:object="${attr}"
+       style="background-color:yellow"
+       th:attrappend="style=|; color:*{color}|" >
+      th:attr
+  </div>
+  <div th:object="${attr}"
+       style="background-color:yellow"
+       th:attrappend="style=|; color:pink|" >
+    th:attr
+  </div>
+
+  <h2>6.조건문 th:if, th:unless</h2>
+  <h3 th:if="${devScore.java >= 90}"> 자바! 합격!</h3>
+  <h3 th:unless="${devScore.html >= 90}"> html 불합격!</h3>
+
+  <h2>7. 반복문 : each / switch case</h2>
+  <ul>
+      <li th:each="key, status : ${devScore.keySet()}" th:switch="${devScore.get(key)/10}">
+          [[${status.count}]]. [[${key}]] : [[${devScore.get(key)}]]
+          <span th:case="${10}">(A++)</span>
+          <span th:case="${9}">(A)</span>
+          <span th:case="${8}">(B)</span>
+          <span th:case="${7}">(C)</span>
+          <span th:case="${6}">(D)</span>
+          <span th:case="${5}">(F)</span>
+      </li>
+  </ul>
+
+
+<h2>8. 원하는 횟수만큼 반복하기</h2>
+<div th:each="e, status : ${#numbers.sequence(0,5)}">
+  <span th:text="|index : ${status.index},|"></span>
+  <span th:text="|count : ${status.count},|"></span>
+  <span th:text="|size : ${status.size},|"></span>
+  <span th:text="|current : ${status.current},|"></span>
+  <span th:text="|even : ${status.even},|"></span>
+  <span th:text="|odd : ${status.odd},|"></span>
+  <span th:text="|first : ${status.first},|"></span>
+  <span th:text="|last : ${status.last},|"></span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

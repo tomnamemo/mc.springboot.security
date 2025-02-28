@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <th:block th:fragment="common_head">
+        <meta charset="UTF-8">
+        <title>multicamplus</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <style>
+            a {color:red;}
+        </style>
+    </th:block>
+</head>
+<body>
+
+    <div th:fragment="gnb">
+        <a href="">로그인</a>
+        <form th:action="@{/logout}" method="post"><button>로그아웃</button></form>
+    </div>
+
+    <div th:fragment="footer">
+        copyright@All rights reserved
+    </div>
+</body>
+</html>
